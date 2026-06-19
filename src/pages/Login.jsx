@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
 
 const UserLogin = () => {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/"
   const [email,    setEmail]    = useState("")
   const [password, setPassword] = useState("")
   const [showPass, setShowPass] = useState(false)
@@ -14,7 +15,7 @@ const UserLogin = () => {
     if (!email || !password) return setError("Please fill all fields")
     setLoading(true); setError("")
     try {
-      const res = await axios.post("http://localhost:5000/userapi/login", { email, password })
+      const res = await axios.post(`${BACKEND_URL}/userapi/login`, { email, password })
       if (res.data.logsts === 0) {
         localStorage.setItem("userToken", res.data.token)
         localStorage.setItem("userId",    res.data.user.id)
